@@ -28,7 +28,10 @@ class credentials(object):
     def signup (self, mail):
         """Check if there is an already existing user with the mail id provided."""
         val = (mail, )
-        self.cur.execute("select u.uid, u.fname, u.lname from user u where exists ( select * from user_mail m where u.uid = m.uid and m.mail = %s", val)
+        self.cur.execute('select user.uid \
+        from user \
+        where exists ( select * \
+        from user_mail where user.uid = user_mail.uid and user_mail.mail = %s', val)
 
         result = self.cur.fetchone()
 

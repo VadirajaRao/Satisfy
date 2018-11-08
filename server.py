@@ -3,12 +3,14 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 import insert
 import check_credentials
+import retriever
 
 app = Flask(__name__)
 app.secret_key = "we are the best"
 
 db = insert.insert_val()
 check = check_credentials.credentials()
+ret = retriever.retrieve()
 
 @app.route('/', methods=['POST', 'GET'])
 def main_page():
@@ -50,12 +52,12 @@ def signup_page():
         height = request.form['height']
         weight = request.form['weight']
 
-        user_exists = check.signup(mail)
+        #user_exists = check.signup(mail)
 
         if not user_exists:
             db.insert_user(mail, fname, lname, passwd, dob, city, height, weight)
 
-        clear = ((not mail == None) and (rpasswd == passwd)) or (not user_exists)
+        clear = (not mail == None) and (rpasswd == passwd)
 
     if not clear:
         return render_template('/signup.html')
