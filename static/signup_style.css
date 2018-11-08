@@ -1,0 +1,117 @@
+body 
+{
+    background-color: rgba(91, 231, 91, 0.425);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    background-image: url('images/boltt3.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%; 
+    color: rgb(255, 255, 255);
+}
+
+.head 
+{
+    text-align: left;
+    padding-left: 2.5%;
+    font-family: Helvetica;
+    margin: 3%;
+    color: rgb(255, 255, 255);
+}
+
+
+ .first, .last
+{
+    color: rgb(255, 255, 255);
+    width: 50%;
+    font-family: Verdana;
+    padding-left: 2%;
+    padding-bottom: 1%;
+}
+
+
+.unique
+{
+    padding-left: 2%;
+    border-right-style: solid;
+    border-right-color : transparent;
+    border-right-width: 1.5px;
+}
+.unique_val, .unique_val1 
+{
+    padding-bottom: 1%;
+    width: 50%;
+}
+
+.gen, .h, .w, .city
+{
+    width: 50%;
+    padding-left: 2%;
+    padding-bottom: 1%;  
+}
+.age
+{
+    width: 50%;
+    padding-left: 2%;
+}
+
+input[type=text], input[type=password], input[type=number] 
+{
+    width: 30%;
+    padding: 8px;
+    display: flex;
+    border: none;
+    background: #f1f1f1;
+}
+.subbutton
+{
+    padding-left: 5.5%;
+}
+.button 
+{
+    border-radius: 8px;
+    background-color: #e60e0e;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    width: 115px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    border: 2px solid #e60e0e ;
+}
+  
+.button span 
+{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+  
+.button span:after 
+{
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+  
+.button:hover span 
+{
+    padding-right: 25px;
+}
+  
+.button:hover span:after 
+{
+    opacity: 1;
+    right: 0;
+}
+
+  /* Opacity for regbutton */
+.registerbtn:hover 
+{
+    opacity: 1;
+}

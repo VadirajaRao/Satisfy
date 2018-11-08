@@ -1,0 +1,107 @@
+body 
+{
+    background-image: url('images/speed1.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%; 
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainhead 
+{
+    text-align: center;
+    color: rgb(212, 23, 23);
+    font-size: 22px;
+}
+
+ul 
+{
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0%;
+    overflow: hidden;
+    background-color: rgb(0, 0, 0);
+}
+
+li 
+{
+    float: left;
+    border-right:1px solid #bbb;
+}
+
+li:last-child 
+{
+    border-right: none;
+}
+
+li a 
+{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) 
+{
+    background-color: rgb(17, 17, 17);
+    
+}
+
+.active 
+{
+    background-color: rgb(211, 13, 13);
+}
+
+.navigation
+{
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+
+.contact
+{
+    color: red;
+}
+
+.table1
+{
+    padding: 3%;
+}
+
+#customers 
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse:collapse;
+    width: 100%;
+}
+
+#customers td, #customers th 
+{
+    border: 1px solid rgba(221, 221, 221, 0.26);
+    padding: 17px;
+}
+
+#customers tr:nth-child(even)
+{
+    background-color: #a014145e;
+}
+
+#customers tr:nth-child(odd)
+{
+    background-color: #f2f2f2;
+}
+
+#customers tr:hover 
+{
+    background-color: rgb(31, 22, 22);
+}
+
+#customers th
+{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: red;
+    color: white;
+}
