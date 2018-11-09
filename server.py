@@ -66,7 +66,12 @@ def signup_page():
 
 @app.route('/home')
 def homepage():
-    return render_template('/home.html')
+    uid = ret.get_uid(session['username'])
+
+    ttime = ret.get_tot_time(uid)
+    distance = ret.get_tot_dist(uid)
+    speed = ret.get_fin_speed(uid)
+    return render_template('/home.html', time = ttime, distance = distance, speed = speed)
 
 @app.route('/logout')
 def logout():

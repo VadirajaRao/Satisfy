@@ -8,7 +8,7 @@ class credentials(object):
             passwd = "Vadi@1998",
             database = "satisfy"
         )
-        self.cur = self.sat.cursor()
+        self.cur = self.sat.cursor(buffered=True)
 
     def login(self, mail, passwd):
         self.cur.execute('select uid from user_mail where mail = %s', mail)
