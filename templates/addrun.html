@@ -1,82 +1,75 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <title>
             Add Run
         </title>
-
-        <link rel="stylesheet" type="text/css" href="addrun_style.css">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'addrun_style.css')}}">
     </head>
 
     <body>
-
         <!--background image-->
-            <div class="bgimg">
-                
-                    <!-- The Heading of the home page -->
-                    <div class="mainhead">
-                        <h1>
-                            Satisfy
-                        </h1>
-                    </div>
-                    
-                    <!--this is the navigation bar-->
-                    <div class = "navigation">
-                            <ul>
-                                    <li><a href="home.html">Home</a></li>
-                                    <li><a class="active" href="addrun.html">Add Run</a></li>
-                                    <li><a href="cchallenge.html">Create Challenge</a></li>
-                                    <li><a href="challlengelist.html">Challenge List</a></li>
-                                    <li><a href="#contact">Add Friend</a></li>
-                                    <li><a href="#contact">History</a></li>
-                                    <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
-                            </ul>
-                    </div>
-                    
-                    <!--Run details-->
-                    <div class="rund">
-                        <div class="dist">
-                            Distance <input type="number" placeholder= "Distance in mts" name="distance" value=" ">
-                        </div>
-
-                        <div class="duration">
-                             Duration<input type="number" placeholder = "Duration in mins" name="duration" value=" ">
-                        </div>
-
-                        <h4>Run Type</h4>
-                        <select class="type">
-                            <option value="sprint">Sprint</option>
-                            <option value="marathon">Marathon</option>
-                            <option value="jog">Jog</option>
-                            <option value="recovery run">Recovery Run</option>
-                        </select>
-
-                        <div class="date">
-                            Date <input type="date" placeholder="Date in DD/MM/YY" name="date" value=" ">
-                        </div>
-                        
-                    <!--   THE RUN ID
-                    {
-                        THE RUN ID SHOULD BE GENERATED IN THE BACKEND, AND THE USER SHOULD NOT BE
-                        ALLOWED TO MAKE A RUN ID OF HIS OWN. 
-                    }
-                     -->
-
-                    </div>
-
-                    <!--Submit-->
-                    <div class="subbutton">
-                                
-                            <!--<input type="submit" name="submit" value="Start satisfy">-->
-                            <a href="xyz.html">
-                                    <button class="button">
-                                        <span>
-                                            Submit
-                                        </span>
-                                    </button>
-                            </a>
-                    </div>
+        <div class="bgimg">
+            <!-- The Heading of the home page -->
+            <div class="mainhead">
+                <h1>
+                    Satisfy
+                </h1>
             </div>
+
+            <!--this is the navigation bar-->
+            <div class = "navigation">
+                <ul>
+                    <li><a href="{{url_for('homepage')}}">Home</a></li>
+                    <li><a class="active" href="{{url_for('addrun')}}">Add Run</a></li>
+                    <li><a href="cchallenge.html">Create Challenge</a></li>
+                    <li><a href="challlengelist.html">Challenge List</a></li>
+                    <li><a href="#contact">Add Friend</a></li>
+                    <li><a href="#contact">History</a></li>
+                    <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
+                </ul>
+            </div>
+
+            <!--Run details-->
+            <form action="https://127.0.0.1:5000/addrun" method="POST">
+                <div class="rund">
+                    <div class="dist">
+                        Distance 
+                        <input type="number" placeholder= "km" name="dist_km" value=" ">
+                        <input type="number" placeholder="m" name="dist_m" value=" ">
+                    </div>
+
+                    <div class="duration">
+                        Duration
+                        <input type="number" placeholder = "Hours" name="time_hours" value=" ">
+                        <input type="number" placeholder="Minutes" name="time_min" value=" ">
+                        <input type="number" placeholder="Seconds" name="time_sec" value=" ">
+                    </div>
+
+                    <h4>Run Type</h4>
+                    <select class="type" name="type">
+                        <option value="Sprint">Sprint</option>
+                        <option value="Marathon">Marathon</option>
+                        <option value="Jog">Jog</option>
+                        <option value="Recovery run">Recovery Run</option>
+                    </select>
+
+                    <div class="date">
+                        Date 
+                        <input type="date" placeholder="Date in DD/MM/YY" name="date" value=" ">
+                    </div>
+                </div>
+
+                <!--Submit-->
+                <div class="subbutton">  
+                    <!--<input type="submit" name="submit" value="Start satisfy">-->
+                    <button class="button">
+                        <span>
+                            <input type="submit">
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </body>
 </html>

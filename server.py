@@ -62,6 +62,7 @@ def signup_page():
     if not clear:
         return render_template('/signup.html')
     else:
+        session['username'] = mail
         return render_template('/home.html')
 
 @app.route('/home')
@@ -77,6 +78,42 @@ def homepage():
 def logout():
     session.pop('username', None)
     return redirect(url_for('main_page'))
+
+@app.route('/addrun', methods=['POST', 'GET'])
+def addrun():
+    clear = False
+    run_num = 0
+    uid = 0
+    rdate = ''
+    if request.method == 'POST':
+        dist_km = request.form['dist_km']
+        dist_m = request.form['dist_m']
+
+        time_hours = request.form['time_hours']
+        time_min = request.form['time_min']
+        time_sec = request.form['time_sec']
+
+        type = request.form['type']
+        rdate = request.form['date']
+
+        uid = ret.get_uid(session['username'])
+
+        run_num = ret.get_run_num(uid, rdate)
+        if run_num == None:
+            run_num = 1
+        else:
+            run_num = int(run_num) + 1
+
+        dist = int(dist_km) + (int(dist_m) / 1000)
+        time = (int(time_hours) * 60) + int(time_min) + (int(time_sec) / 60)
+        db.insert_run(uid, rdate, run_num, dist, time, type)
+        ret.change_user_tot(uid, run_num, rdate)
+        clear = True
+
+    if not clear:
+        return render_template('/addrun.html')
+    else:
+        return redirect(url_for('homepage'))
 
 if __name__ == '__main__':
     app.debug = True

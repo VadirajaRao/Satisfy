@@ -23,18 +23,20 @@ class insert_val(object):
         """Insert values into user_mail table."""
         sql = 'insert into user_mail(uid, mail) values (%s, %s)'
         val = (uid, mail)
-
         self.cur.execute(sql, val)
-
         return
 
     def insert_user_age (self, uid, age):
         """Insert value into user_age table."""
         sql = 'insert into user_age(uid, age) values (%s, %s)'
         val = (uid, age)
-
         self.cur.execute(sql, val)
+        return
 
+    def insert_user_speed (self, uid):
+        """Insert value into user_speed table."""
+        val = (uid, 0.0)
+        self.cur.execute('insert into user_speed(uid, fin_speed) values (%s, %s)', val)
         return
 
     """ This function is yet to be completed. """
@@ -42,18 +44,17 @@ class insert_val(object):
         """Insert values into user table."""
         sql = 'insert into user(fname, lname, passwd, dob, city, height, weight, tot_dist, tot_time) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
         val = (args[1], args[2], args[3], args[4], args[5], args[6], args[7], 0.0, 0.0)
-
         self.cur.execute(sql, val)
 
         self.cur.execute('select max(uid) from user')
         uid = self.cur.fetchone()
-
         self.insert_user_mail(uid[0], args[0])
 
         dob = datetime.datetime.strptime(args[4], "%Y-%m-%d")
         age = self.calculate_age(dob)
         self.insert_user_age(uid[0], age)
 
+        self.insert_user_speed(uid[0])
         self.sat.commit()
 
     def insert_friend(self, *args):
@@ -62,7 +63,10 @@ class insert_val(object):
 
     def insert_run(self, *args):
         """Insert values into run table."""
-        pass
+        sql = 'insert into run(uid, rdate, run_num, dist, time, type) values (%s, %s, %s, %s, %s, %s)'
+        val = (args[0], args[1], args[2], args[3], args[4], args[5])
+        self.cur.execute(sql, val)
+        self.sat.commit()
 
     def insert_challenge(self, *args):
         """Insert values into challenge table."""
