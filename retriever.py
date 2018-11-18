@@ -63,28 +63,6 @@ class retrieve (object):
 
         return result[0]
 
-    def change_user_tot(self, uid, run_num, rdate):
-        """Reflects changes with users total in user table, based on changes in other tables."""
-        sql = 'select dist, time from run where uid = "%s" and run_num = "%s" and rdate = "%s"'
-        val = (uid, run_num, rdate)
-        self.cur.execute(sql, val)
-        result = self.cur.fetchone()
-        dist = result[0]
-        time = result[1]
-
-        sql = 'select tot_dist, tot_time from user where uid = %s'
-        val = (uid, )
-        self.cur.execute(sql, val)
-        result = self.cur.fetchone()
-        tot_dist = float(dist) + float(result[0])
-        tot_time = float(time) + float(result[1])
-
-        sql = 'update user set tot_dist = %s where uid = %s'
-        val = (tot_dist, uid)
-        self.cur.execute(sql, val)
-        self.sat.commit()
-
-        sql = 'update user set tot_time = %s where uid = %s'
-        val = (tot_time, uid)
-        self.cur.execute(sql, val)
+    def make_commit(self):
+        """Commit the changes into the database."""
         self.sat.commit()

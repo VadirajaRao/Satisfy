@@ -104,15 +104,15 @@ def addrun():
         else:
             run_num = int(run_num) + 1
 
-        dist = int(dist_km) + (int(dist_m) / 1000)
-        time = (int(time_hours) * 60) + int(time_min) + (int(time_sec) / 60)
+        dist = float(dist_km) + (float(dist_m) / 1000)
+        time = (float(time_hours) * 60) + float(time_min) + (float(time_sec) / 60)
         db.insert_run(uid, rdate, run_num, dist, time, type)
-        ret.change_user_tot(uid, run_num, rdate)
         clear = True
 
     if not clear:
         return render_template('/addrun.html')
     else:
+        ret.make_commit()
         return redirect(url_for('homepage'))
 
 if __name__ == '__main__':
