@@ -63,6 +63,15 @@ class retrieve (object):
 
         return result[0]
 
+    def get_all_runs(self, uid):
+        """Retruns the run details of one user."""
+        sql = 'select dist, time, rdate from run where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+        result = self.cur.fetchall()
+
+        return result
+
     def make_commit(self):
         """Commit the changes into the database."""
         self.sat.commit()

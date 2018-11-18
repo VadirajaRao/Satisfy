@@ -70,4 +70,15 @@ class insert_val(object):
 
     def insert_challenge(self, *args):
         """Insert values into challenge table."""
+        sql = 'insert into challenge(dist, time, type, start, end) values (%s, %s, %s, %s, %s)'
+        val = (args[0], args[1], args[2], args[3], args[4])
+        self.cur.execute(sql, val)
+        self.sat.commit()
+
+    def insert_run_speed(self, *args):
+        """Insert values into run_speed table."""
+        pass
+
+    def insert_participate(self, *args):
+        """Insert values into participate table."""
         pass

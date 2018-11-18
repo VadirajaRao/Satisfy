@@ -4,7 +4,7 @@
         <title>
             Create Challenge
         </title>
-        <link rel="stylesheet" type="text/css" href="cchallenge_style.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'cchallenge_style.css') }}">
     </head>
 
     <body>
@@ -20,64 +20,65 @@
             <!--this is the navigation bar-->
             <div class = "navigation">
                 <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="addrun.html">Add Run</a></li>
-                    <li><a class="active" href="cchallenge.html">Create Challenge</a></li>
+                    <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
+                    <li><a class="active" href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
                     <li><a href="challlengelist.html">Challenge List</a></li>
                     <li><a href="#contact">Add Friend</a></li>
-                    <li><a href="#contact">History</a></li>
+                    <li><a href="{{ url_for('history') }}">History</a></li>
+                    <li><a href="{{url_for('logout')}}">Logout</a></li>
                     <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
                 </ul>
             </div>
 
             <!--Run details-->
-            <div class="chaldet">
+            <form action="https://127.0.0.1:5000/create_challenge" method="POST">
+                <div class="chaldet">
 
-                <div class="dist">
-                    Distance <input type="number" placeholder= "Distance in mts" name="distance" value=" ">
+                    <div class="dist">
+                        Distance <input type="number" placeholder= "Distance in mts" name="distance" value=" ">
+                    </div>
+
+                    <div class="duration">
+                        Time <input type="number" placeholder = "Duration in mins" name="duration" value=" ">
+                    </div>
+
+                    <h4>Run Type</h4>
+                    <select class="type" name="type">
+                        <option value="sprint">Sprint</option>
+                        <option value="marathon">Marathon</option>
+                        <option value="jog">Jog</option>
+                        <option value="recovery run">Recovery Run</option>
+                    </select>
+
+                    <div class="sdate">
+                        Start Date <input type="date" placeholder="Start Date in DD/MM/YY" name="start_date" value=" ">
+                    </div>
+
+                    <div class="edate">
+                        End Date <input type="date" placeholder="End Date in DD/MM/YY" name="end_date" value=" ">
+                    </div>
                 </div>
 
-                <div class="duration">
-                    Duration<input type="number" placeholder = "Duration in mins" name="duration" value=" ">
-                </div>
 
-                <h4>Run Type</h4>
-                <select class="type">
-                    <option value="sprint">Sprint</option>
-                    <option value="marathon">Marathon</option>
-                    <option value="jog">Jog</option>
-                    <option value="recovery run">Recovery Run</option>
-                </select>
+                <!-- A USER'S FRIEND LIST, FROM WHERE THE USER SELECTS THE FRIENDS TO CHALLENGE THEM
+                {
+                    CONSISTS OF A LIST OF FRIENDS, THE NAMES ARE DISPLAYED (NOT THEIR MAIL ID)IN THE FORM OF CHECKBOXES.
+                    THE USER SIMPLY SELECTS THE FRIENDS'S NAMES AND AFTER SUBMITTING THE RESPONSE, 
+                    THE MAIL GOES AUTOMATICALLY.
+                }-->
 
-                <div class="sdate">
-                    Start Date <input type="date" placeholder="Start Date in DD/MM/YY" name="date" value=" ">
-                </div>
+                <!--Submit-->
+                <div class="subbutton">
 
-                <div class="edate">
-                    End Date <input type="date" placeholder="End Date in DD/MM/YY" name="date" value=" ">
-                </div>
-            </div>
-
-
-            <!-- A USER'S FRIEND LIST, FROM WHERE THE USER SELECTS THE FRIENDS TO CHALLENGE THEM
-            {
-                CONSISTS OF A LIST OF FRIENDS, THE NAMES ARE DISPLAYED (NOT THEIR MAIL ID)IN THE FORM OF CHECKBOXES.
-                THE USER SIMPLY SELECTS THE FRIENDS'S NAMES AND AFTER SUBMITTING THE RESPONSE, 
-                THE MAIL GOES AUTOMATICALLY.
-            }-->
-
-            <!--Submit-->
-            <div class="subbutton">
-
-                <!--<input type="submit" name="submit" value="Start satisfy">-->
-                <a href="xyz.html">
+                    <!--<input type="submit" name="submit" value="Start satisfy">-->
                     <button class="button">
                         <span>
-                            Submit
+                            <input type="submit">
                         </span>
                     </button>
-                </a>
-            </div>
+                </div>
+            </form>
         </div>
     </body>
 </html>

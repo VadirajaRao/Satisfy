@@ -112,8 +112,33 @@ def addrun():
     if not clear:
         return render_template('/addrun.html')
     else:
-        ret.make_commit()
+        ret.make_commit() # To make sure the changes made by the trigger are committed.
         return redirect(url_for('homepage'))
+
+@app.route('/create_challenge', methods = ['POST', 'GET'])
+def create_challenge():
+    clear = False
+    if request.method == 'POST':
+        distance = request.form['distance']
+        time = request.form['duration']
+        type = request.form['type']
+        sdate = request.form['start_date']
+        edate = request.form['end_date']
+
+        db.insert_challenge(distance, time, type, sdate, edate)
+        clear = True
+
+    if not clear:
+        return render_template('/cchallenge.html')
+    else:
+        return redirect(url_for('homepage'))
+
+@app.route('/history')
+def history():
+    uid = ret.get_uid(session['username'])
+    res = ret.get_all_runs(uid)
+
+    return render_template('/history.html', runs = res)
 
 if __name__ == '__main__':
     app.debug = True

@@ -22,11 +22,11 @@
             <div class = "navigation">
                 <ul>
                     <li><a class="active" href="home.html">Home</a></li>
-                    <li><a href="{{url_for('addrun')}}">Add Run</a></li>
-                    <li><a href="cchallenge.html">Create Challenge</a></li>
+                    <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
+                    <li><a href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
                     <li><a href="challlengelist.html">Challenge List</a></li>
                     <li><a href="#contact">Add Friend</a></li>
-                    <li><a href="#contact">History</a></li>
+                    <li><a href="{{ url_for('history') }}">History</a></li>
                     <li><a href="{{url_for('logout')}}">Logout</a></li>
                     <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
                 </ul>
