@@ -125,7 +125,9 @@ def create_challenge():
         sdate = request.form['start_date']
         edate = request.form['end_date']
 
-        db.insert_challenge(distance, time, type, sdate, edate)
+        cid = db.insert_challenge(distance, time, type, sdate, edate)
+        uid = ret.get_uid(session['username'])
+        db.insert_participate(cid, uid)
         clear = True
 
     if not clear:
@@ -139,6 +141,10 @@ def history():
     res = ret.get_all_runs(uid)
 
     return render_template('/history.html', runs = res)
+
+@app.route('/challenges')
+def challenges():
+    return render_template('/challengelist.html')
 
 if __name__ == '__main__':
     app.debug = True

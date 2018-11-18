@@ -2,9 +2,9 @@
 <html>
     <head>
         <title>
-            Home Page
+            Challenge List
         </title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'home_style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'challengelist_style.css') }}">
     </head>
 
     <body>
@@ -21,23 +21,27 @@
             <!--this is the navigation bar-->
             <div class = "navigation">
                 <ul>
-                    <li><a class="active" href="home.html">Home</a></li>
+                    <li><a href="{{ url_for('homepage') }}">Home</a></li>
                     <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
                     <li><a href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
-                    <li><a href="{{ url_for('challenges') }}">Challenge List</a></li>
+                    <li><a class="active" href="{{ url_for('challenges') }}">Challenge List</a></li>
                     <li><a href="#contact">Add Friend</a></li>
                     <li><a href="{{ url_for('history') }}">History</a></li>
-                    <li><a href="{{url_for('logout')}}">Logout</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
                 </ul>
             </div>
 
-            <div>
-                <ul style="color: white">
-                    <li>Time : {{time}}</li>
-                    <li>Distance : {{distance}}</li>
-                    <li>Speed : {{speed}}</li>
-                </ul>
+            <div class="table1">
+                <table id="customers">
+                    <tr>
+                        <th>DISTANCE</th>
+                        <th>TIME</th>
+                        <th>TYPE</th>
+                        <th>START</th>
+                        <th>END</th>
+                    </tr>
+                </table>
             </div>
         </div>
     </body>

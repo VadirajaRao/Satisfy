@@ -74,11 +74,18 @@ class insert_val(object):
         val = (args[0], args[1], args[2], args[3], args[4])
         self.cur.execute(sql, val)
         self.sat.commit()
+        self.cur.execute('select max(cid) from challenge')
+        res = self.cur.fetchone()
+        return res[0]
 
     def insert_run_speed(self, *args):
         """Insert values into run_speed table."""
         pass
 
-    def insert_participate(self, *args):
+    def insert_participate(self, cid, uid):
         """Insert values into participate table."""
-        pass
+        sql = 'insert into participate(cid, uid) values (%s, %s)'
+        val = (cid, uid)
+
+        self.cur.execute(sql, val)
+        self.sat.commit()
