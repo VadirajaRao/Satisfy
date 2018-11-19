@@ -74,15 +74,21 @@ class retrieve (object):
 
     def get_all_challenges(self, uid):
         """Returns the challenges of a user."""
-        pass
+        sql = 'select cid from participate where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
 
-    def get_cid(self, dist, time):
-        """Returns the challenge id."""
-        val = (dist, time)
-        self.cur.execute('select max(cid) from challenge where dist = %s and time = %s', val)
-        res = self.cur.fetchone()
+        res = self.cur.fetchall()
 
-        return res[0]
+        result = []
+        sql = 'select dist, time, type, start, end from challenge where cid = %s'
+        for i in res:
+            val = (i[0], )
+            self.cur.execute(sql, val)
+            r = self.cur.fetchone()
+            result.append(r)
+
+        return result
 
     def make_commit(self):
         """Commit the changes into the database."""

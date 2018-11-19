@@ -144,7 +144,9 @@ def history():
 
 @app.route('/challenges')
 def challenges():
-    return render_template('/challengelist.html')
+    uid = ret.get_uid(session['username'])
+    challenges = ret.get_all_challenges(uid)
+    return render_template('/challengelist.html', res = challenges)
 
 if __name__ == '__main__':
     app.debug = True
