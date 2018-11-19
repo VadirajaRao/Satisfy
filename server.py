@@ -148,6 +148,10 @@ def challenges():
     challenges = ret.get_all_challenges(uid)
     return render_template('/challengelist.html', res = challenges)
 
+@app.route('/friends')
+def friends():
+    return render_template('/friends.html')
+
 if __name__ == '__main__':
     app.debug = True
     app.run(ssl_context = 'adhoc')

@@ -4,7 +4,7 @@
         <title>
             Friends
         </title>
-        <link rel="stylesheet" type="text/css" href="friends_style.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='friends_style.css') }}">
     </head>
 
     <body>
@@ -21,12 +21,13 @@
             <!--this is the navigation bar-->
             <div class = "navigation">
                 <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="addrun.html">Add Run</a></li>
-                    <li><a href="cchallenge.html">Create Challenge</a></li>
-                    <li><a href="challlengelist.html">Challenge List</a></li>
-                    <li><a class="active" href="friends.html">Friends</a></li>
-                    <li><a href="#contact">History</a></li>
+                    <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
+                    <li><a href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
+                    <li><a href="{{ url_for('challenges') }}">Challenge List</a></li>
+                    <li><a class="active" href="{{ url_for('friends') }}">Friends</a></li>
+                    <li><a href="{{ url_for('history') }}">History</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
                 </ul>
             </div>
