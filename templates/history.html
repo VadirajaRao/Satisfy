@@ -1,41 +1,55 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>History</title>
+        <title>
+            History
+        </title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'history_style.css') }}">
     </head>
 
     <body>
-        <h1>
-            Satisfy
-        </h1>
+        <!--background image-->
+        <div class="bgimg">
 
-        <div class = "navigation">
-            <ul>
-                <li><a class="active" href="{{ url_for('homepage') }}">Home</a></li>
-                <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
-                <li><a href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
-                <li><a href="{{ url_for('challenges') }}">Challenge List</a></li>
-                <li><a href="#contact">Add Friend</a></li>
-                <li><a href="{{ url_for('history') }}">History</a></li>
-                <li><a href="{{url_for('logout')}}">Logout</a></li>
-                <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
-            </ul>
+            <!-- The Heading of the home page -->
+            <div class="mainhead">
+                <h1>
+                    Satisfy
+                </h1>
+            </div>
+
+            <!--this is the navigation bar-->
+            <div class = "navigation">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
+                    <li><a href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
+                    <li><a href="{{ url_for('challenges') }}">Challenge List</a></li>
+                    <li><a href="#contact">Add Friend</a></li>
+                    <li><a class="active" href="{{ url_for('history') }}">History</a></li>
+                    <li><a href="{{url_for('logout')}}">Logout</a></li>
+                    <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
+                </ul>
+            </div>
+
+            <div class="table1">
+               <table id="customers">
+                   <tr>
+                       <th>Distance</th>
+                       <th>Time</th>
+                       <th>Date</th>
+                   </tr>
+
+                   {% for run in runs %}
+                   <tr>
+                       <td>{{ run[0] }}</td>
+                       <td>{{ run[1] }}</td>
+                       <td>{{ run[2] }}</td>
+                   </tr>
+
+                   {% endfor %}
+                </table>
+            </div>  
         </div>
-
-        <table>
-            <tr>
-                <th>Distance</th>
-                <th>Time</th>
-                <th>Date</th>
-            </tr>
-
-            {% for run in runs %}
-                <tr>
-                    <td> {{ run[0] }} </td>
-                    <td> {{ run[1] }} </td>
-                    <td> {{ run[2] }}</td>
-                </tr>
-            {% endfor %}
-        </table>
     </body>
 </html>
