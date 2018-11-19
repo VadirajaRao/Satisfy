@@ -90,6 +90,24 @@ class retrieve (object):
 
         return result
 
+    def get_fname(self, uid):
+        """Returns the fname based on uid."""
+        sql = 'select fname from user where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchone()
+
+        return res[0]
+
+    def get_lname(self, uid):
+        """returns the lanme based on uid."""
+        sql = 'select lname from user where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchone()
+
+        return res[0]
+
     def make_commit(self):
         """Commit the changes into the database."""
         self.sat.commit()

@@ -1,12 +1,22 @@
 """ This script will run on the server and will keep the site alive. """
 
 from flask import Flask, redirect, url_for, render_template, request, session
+from flask_mail import Mail, Message
 import insert
 import check_credentials
 import retriever
 
 app = Flask(__name__)
 app.secret_key = "we are the best"
+
+mail = Mail(app)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'satisfybit@gmail.com'
+app.config['MAIL_PASSWORD'] = 'laferrar1'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 db = insert.insert_val()
 check = check_credentials.credentials()
@@ -148,9 +158,33 @@ def challenges():
     challenges = ret.get_all_challenges(uid)
     return render_template('/challengelist.html', res = challenges)
 
-@app.route('/friends')
+@app.route('/friends', methods = ['POST', 'GET'])
 def friends():
-    return render_template('/friends.html')
+    clear = False
+    if request.method == 'POST':
+        mail_id = request.form['mail']
+        msg = Message('You have a new friend!!', sender = 'satisfybit@gmail.com', recipients=[mail_id])
+        uid = ret.get_uid(session['username'])
+        fname = ret.get_fname(uid)
+        lname = ret.get_lname(uid)
+        msg.body = fname + lname + " has added you as a friend\nHeil Hitler!!"
+        mail.send(msg)
+
+        clear = True
+
+    if not clear:
+        return render_template('/friends.html')
+    else:
+        return redirect(url_for('homepage'))
+
+"""
+@app.route('/mail')
+def mail_sender():
+    msg = Message('Hello Sujay', sender = 'satisfybit@gmail.com', recipients=['sujayputtu@gmail.com'])
+    msg.body = "Neenu kenchanalli kencha kananno"
+    mail.send(msg)
+    return "Pass"
+"""
 
 if __name__ == '__main__':
     app.debug = True
