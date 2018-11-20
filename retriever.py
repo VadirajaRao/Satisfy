@@ -7,8 +7,8 @@ class retrieve (object):
     def __init__ (self):
         self.sat = con.connect (
             host = "localhost",
-            user = "root",
-            passwd = "laferrar1",
+            user = "vadi",
+            passwd = "Vadi@1998",
             database = "satisfy"
         )
         self.cur = self.sat.cursor(buffered = True) # 'bufffered = True' was causing the MySQL errors(unread parameter and arguments missing error). If you get any such errors, check this line.
