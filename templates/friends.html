@@ -43,6 +43,20 @@
                     <input type="submit">
                 </form>
             </div>
+
+            <div>
+                <table>
+                    <tr>
+                        <th>Your Friends on Satisfy</th>
+                    </tr>
+
+                    {% for name in names %}
+                    <tr>
+                        <td> {{ name }} </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </body>
 </html>

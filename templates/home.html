@@ -21,7 +21,7 @@
             <!--this is the navigation bar-->
             <div class = "navigation">
                 <ul>
-                    <li><a class="active" href="home.html">Home</a></li>
+                    <li><a class="active" href="{{ url_for('homepage') }}">Home</a></li>
                     <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
                     <li><a href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
                     <li><a href="{{ url_for('challenges') }}">Challenge List</a></li>

@@ -65,7 +65,7 @@ class retrieve (object):
 
     def get_all_runs(self, uid):
         """Retruns the run details of one user."""
-        sql = 'select dist, time, rdate from run where uid = %s'
+        sql = 'select r.dist, r.time, r.rdate, s.speed from run r, run_speed s where r.uid = s.uid and r.run_num = s.run_num and r.rdate = s.rdate and r.uid = %s'
         val = (uid, )
         self.cur.execute(sql, val)
         result = self.cur.fetchall()
@@ -107,6 +107,32 @@ class retrieve (object):
         res = self.cur.fetchone()
 
         return res[0]
+
+    def get_tot_speed(self, uid):
+        """Returns the average speed based on uid."""
+        sql = 'select fin_speed from user_speed where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchone()
+
+        return res[0]
+
+    def get_number_of_runs(self, uid):
+        """Returns the number of runs."""
+        sql = 'select count(*) from run where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchone()
+
+        return res[0]
+
+    def get_all_friends(self, uid):
+        """Returns all the friends based on uid."""
+        sql = 'select fid from friends_of where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+
+        return self.cur.fetchall()
 
     def make_commit(self):
         """Commit the changes into the database."""

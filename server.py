@@ -10,10 +10,10 @@ app = Flask(__name__)
 app.secret_key = "we are the best"
 
 mail = Mail(app)
-app.config['MAIL_SERVER'] = "smtp.gmail.com"
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = "satisfybit@gmail.com"
-app.config['MAIL_PASSWORD'] = "laferrar1"
+app.config['MAIL_USERNAME'] = 'satisfybit@gmail.com'
+app.config['MAIL_PASSWORD'] = 'yamaha@mt_10'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -97,9 +97,18 @@ def homepage():
     uid = ret.get_uid(session['username'])
 
     ttime = ret.get_tot_time(uid)
+    hours = int(ttime / 60)
+    minutes = int(ttime - (hours * 60))
+    sec = int((ttime - int(ttime)) * 60)
+    fin_time = str(hours) + " : " + str(minutes) + " : " + str(sec)
+
     distance = ret.get_tot_dist(uid)
+    
     speed = ret.get_fin_speed(uid)
-    return render_template('/home.html', time = ttime, distance = distance, speed = speed)
+    min = int(speed)
+    sec = int((speed - min) * 60)
+    perkm = str(min) + "' " + str(sec) + '" '
+    return render_template('/home.html', time = fin_time, distance = distance, speed = perkm)
 
 @app.route('/logout')
 def logout():
@@ -134,6 +143,16 @@ def addrun():
         dist = float(dist_km) + (float(dist_m) / 1000)
         time = (float(time_hours) * 60) + float(time_min) + (float(time_sec) / 60)
         db.insert_run(uid, rdate, run_num, dist, time, type)
+
+        speed = time / dist
+        db.insert_run_speed(uid, rdate, run_num, speed)
+
+        tot_speed = ret.get_tot_speed(uid)
+        tot_runs = ret.get_number_of_runs(uid)
+
+        new_speed = ((tot_speed * tot_runs) + speed) / (tot_runs + 1)
+
+        db.update_user_speed(uid, new_speed)
         clear = True
 
     if not clear:
@@ -167,7 +186,26 @@ def history():
     uid = ret.get_uid(session['username'])
     res = ret.get_all_runs(uid)
 
-    return render_template('/history.html', runs = res)
+    final = []
+    temp = []
+    for tuple in res:
+        temp.clear()
+        temp.insert(0, tuple[0])
+        hours = int(tuple[1] / 60)
+        minutes = int(tuple[1] - (hours * 60))
+        sec = int((tuple[1] - int(tuple[1])) * 60)
+        
+        temp.insert(1 , (str(hours) + " : " + str(minutes) + " : " + str(sec)) )
+        
+        temp.insert(2, tuple[2])
+
+        min = int(tuple[3])
+        sec = int((tuple[3] - min) * 60)
+        perkm = str(min) + "' " + str(sec) + '" '
+        temp.insert(3, perkm)
+        final.append(temp)
+
+    return render_template('/history.html', runs = final)
 
 @app.route('/challenges')
 def challenges():
@@ -177,6 +215,14 @@ def challenges():
 
 @app.route('/friends', methods = ['POST', 'GET'])
 def friends():
+    friend_list = ret.get_all_friends(ret.get_uid(session['username']))
+    name_list = []
+    for friend in friend_list:
+        name = ret.get_fname(friend[0]) + " " + ret.get_lname(friend[0])
+        name_list.append(name)
+
+    print(name_list)
+    
     clear = False
     exists = False
     if request.method == 'POST':
@@ -190,6 +236,9 @@ def friends():
             msg.body = fname + " " + lname + " has added you as a friend!!"
             mail.send(msg)
 
+            fid = ret.get_uid(mail_id)
+            db.insert_friend(uid, fid)
+
         else:
             error = "User does not exist"
             return render_template('/friends.html', error = error)
@@ -197,7 +246,7 @@ def friends():
         clear = True
 
     if not clear:
-        return render_template('/friends.html')
+        return render_template('/friends.html', names = name_list)
     else:
         return redirect(url_for('homepage'))
 

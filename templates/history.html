@@ -38,6 +38,7 @@
                        <th>Distance</th>
                        <th>Time</th>
                        <th>Date</th>
+                       <th>Speed</th>
                    </tr>
 
                    {% for run in runs %}
@@ -45,6 +46,7 @@
                        <td>{{ run[0] }}</td>
                        <td>{{ run[1] }}</td>
                        <td>{{ run[2] }}</td>
+                       <td>{{ run[3] }}</td>
                    </tr>
 
                    {% endfor %}
