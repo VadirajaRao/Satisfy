@@ -36,6 +36,10 @@
                 <form action="https://127.0.0.1:5000/friends" method='POST'>
                     Mail : <input type="email" placeholder="mail" name="mail">
 
+                    {% if error %}
+                    <p>{{ error }}</p>
+                    {% endif %}
+
                     <input type="submit">
                 </form>
             </div>

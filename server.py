@@ -161,14 +161,21 @@ def challenges():
 @app.route('/friends', methods = ['POST', 'GET'])
 def friends():
     clear = False
+    exists = False
     if request.method == 'POST':
         mail_id = request.form['mail']
-        msg = Message('You have a new friend!!', sender = 'satisfybit@gmail.com', recipients=[mail_id])
-        uid = ret.get_uid(session['username'])
-        fname = ret.get_fname(uid)
-        lname = ret.get_lname(uid)
-        msg.body = fname + lname + " has added you as a friend\nHeil Hitler!!"
-        mail.send(msg)
+        exists = check.signup(mail_id)
+        if exists:
+            msg = Message('You have a new friend!!', sender = 'satisfybit@gmail.com', recipients=[mail_id])
+            uid = ret.get_uid(session['username'])
+            fname = ret.get_fname(uid)
+            lname = ret.get_lname(uid)
+            msg.body = fname + lname + " has added you as a friend\nHeil Hitler!!"
+            mail.send(msg)
+
+        else:
+            error = "User does not exist"
+            return render_template('/friends.html', error = error)
 
         clear = True
 
