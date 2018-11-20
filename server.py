@@ -29,18 +29,28 @@ def main_page():
         return redirect(url_for('homepage'))
 
     clear = False
+    exists = False
+    perror = ""
     if request.method == 'POST':
         mail = request.form['mail']
         passwd = request.form['passwd']
 
         mailid = (mail, )
-        clear = check.login(mailid, passwd)
+        exists = check.signup(mail)
+        
+        if exists:
+            clear = check.login(mailid, passwd)
+            if not clear:
+                perror = "Incorrect password"
+        else:
+            uerror = "Invalid username"
+            return render_template('/index.html', uerror = uerror)
 
         if clear:
             session['username'] = mail
 
     if not clear:
-        return render_template('/index.html')
+        return render_template('/index.html', perror = perror)
     else:
         return redirect(url_for('homepage'))
 
