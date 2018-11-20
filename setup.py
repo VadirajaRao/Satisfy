@@ -3,8 +3,8 @@ import mysql.connector
 """ Creates a connection object to MySQL server """
 satisfy = mysql.connector.connect (
     host = 'localhost',
-    user = 'vadi',
-    passwd = 'Vadi@1998',
+    user = 'root',
+    passwd = 'laferrar1',
     database = 'satisfy'
 )
 

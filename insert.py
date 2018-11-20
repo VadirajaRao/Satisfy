@@ -8,8 +8,8 @@ class insert_val(object):
         """Function that connects to the database."""
         self.sat = con.connect(
             host = "localhost",
-            user = "vadi",
-            passwd = "Vadi@1998",
+            user = "root",
+            passwd = "laferrar1",
             database = "satisfy"
         )
         self.cur = self.sat.cursor()

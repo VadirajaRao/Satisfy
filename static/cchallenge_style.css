@@ -79,7 +79,14 @@ li a:hover:not(.active)
 .duration
 {
     padding-bottom: 0%;
+    display: flex;
 }
+
+.hrs , .mins , .secs
+{
+    width: 30%;
+    display: flex;
+} 
 
 .sdate, .edate
 {

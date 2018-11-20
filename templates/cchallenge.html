@@ -24,7 +24,7 @@
                     <li><a href="{{ url_for('addrun') }}">Add Run</a></li>
                     <li><a class="active" href="{{ url_for('create_challenge') }}">Create Challenge</a></li>
                     <li><a href="{{ url_for('challenges') }}">Challenge List</a></li>
-                    <li><a href="{{ url_for('friends') }}">Add Friend</a></li>
+                    <li><a href="{{ url_for('friends') }}">Friends</a></li>
                     <li><a href="{{ url_for('history') }}">History</a></li>
                     <li><a href="{{url_for('logout')}}">Logout</a></li>
                     <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
@@ -36,11 +36,22 @@
                 <div class="chaldet">
 
                     <div class="dist">
-                        Distance <input type="number" placeholder= "Distance in mts" name="distance" value=" ">
+                        Distance 
+                        <input type="number" placeholder= "km" name="dist_km" value=" ">
+                        <input type="number" placeholder="m" name="dist_m" value=" ">
                     </div>
-
+    
                     <div class="duration">
-                        Time <input type="number" placeholder = "Duration in mins" name="duration" value=" ">
+                        <div class="hrs">
+                            Duration
+                            <input type="number" placeholder = "Hours" name="time_hours" value=" ">
+                        </div>
+                        <div class="mins">
+                            <input type="number" placeholder="Minutes" name="time_min" value=" ">
+                        </div>
+                        <div class="secs">
+                            <input type="number" placeholder="Seconds" name="time_sec" value=" ">
+                        </div>
                     </div>
 
                     <h4>Run Type</h4>
@@ -57,6 +68,18 @@
 
                     <div class="edate">
                         End Date <input type="date" placeholder="End Date in DD/MM/YY" name="end_date" value=" ">
+                    </div>
+                    <div class="mail">
+                            Friend 1<input type="text" placeholder="Enter friend's Email" name="mail" value="">
+                    </div>
+                    <div class="mail">
+                            Friend 2<input type="text" placeholder="Enter friend's Email" name="mail" value="">
+                    </div>
+                    <div class="mail">
+                            Friend 3<input type="text" placeholder="Enter friend's Email" name="mail" value="">
+                    </div>
+                    <div class="mail">
+                            Friend 4<input type="text" placeholder="Enter friend's Email" name="mail" value="">
                     </div>
                 </div>
 
