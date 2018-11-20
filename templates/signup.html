@@ -34,6 +34,9 @@
                     <!--Username-->
                     <div class="unique_val">
                         Email<input type="text" placeholder="Enter Email" name="mail" value="">
+                        {% if existing_user %}
+                        <p> {{ existing_user }} </p> 
+                        {% endif %}
                     </div>
 
                     <!--Password-->
@@ -44,6 +47,9 @@
                     <!--Repeat Password-->
                     <div class="unique_val1">
                         Repeat Password <input type="password" placeholder="Repeat Password"name="rpasswd" value="">
+                        {% if not_matching_passwd %}
+                        <p> {{ not_matching_passwd }} </p>
+                        {% endif %}
                     </div>
                 </div>
 

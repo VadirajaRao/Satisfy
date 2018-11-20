@@ -10,10 +10,10 @@ app = Flask(__name__)
 app.secret_key = "we are the best"
 
 mail = Mail(app)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = "smtp.gmail.com"
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'satisfybit@gmail.com'
-app.config['MAIL_PASSWORD'] = 'laferrar1'
+app.config['MAIL_USERNAME'] = "satisfybit@gmail.com"
+app.config['MAIL_PASSWORD'] = "laferrar1"
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -72,12 +72,19 @@ def signup_page():
         height = request.form['height']
         weight = request.form['weight']
 
-        #user_exists = check.signup(mail)
+        user_exists = check.signup(mail)
 
-        if not user_exists:
+        if user_exists:
+            message = "User already exists with this mail id."
+            return render_template('/signup.html', existing_user = message)
+        else:
             db.insert_user(mail, fname, lname, passwd, dob, city, height, weight)
 
-        clear = (not mail == None) and (rpasswd == passwd)
+        if not passwd == rpasswd:
+            message = "The password is not repeated correctly."
+            return render_template('/signup.html', not_matching_passwd = message)
+        
+        clear = True
 
     if not clear:
         return render_template('/signup.html')
@@ -180,7 +187,7 @@ def friends():
             uid = ret.get_uid(session['username'])
             fname = ret.get_fname(uid)
             lname = ret.get_lname(uid)
-            msg.body = fname + lname + " has added you as a friend\nHeil Hitler!!"
+            msg.body = fname + " " + lname + " has added you as a friend!!"
             mail.send(msg)
 
         else:
@@ -193,15 +200,6 @@ def friends():
         return render_template('/friends.html')
     else:
         return redirect(url_for('homepage'))
-
-"""
-@app.route('/mail')
-def mail_sender():
-    msg = Message('Hello Sujay', sender = 'satisfybit@gmail.com', recipients=['sujayputtu@gmail.com'])
-    msg.body = "Neenu kenchanalli kencha kananno"
-    mail.send(msg)
-    return "Pass"
-"""
 
 if __name__ == '__main__':
     app.debug = True
