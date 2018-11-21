@@ -165,15 +165,57 @@ def addrun():
 def create_challenge():
     clear = False
     if request.method == 'POST':
-        distance = request.form['distance']
-        time = request.form['duration']
+        distance_km = request.form['km']
+        distance_m = request.form['m']
+        tot_distance = float(distance_km) + (float(distance_m) / 60)
+        hours = request.form['hours']
+        minutes = request.form['minutes']
+        sec = request.form['sec']
+        tot_time = (float(hours * 60)) + (float(minutes)) + (float(sec) / 60)
         type = request.form['type']
         sdate = request.form['start_date']
         edate = request.form['end_date']
+        mail_list = []
+        mail_list.insert(0, request.form['mail1'])
+        mail_list.insert(1, request.form['mail2'])
+        mail_list.insert(2, request.form['mail3'])
+        mail_list.insert(3, request.form['mail4'])
 
-        cid = db.insert_challenge(distance, time, type, sdate, edate)
-        uid = ret.get_uid(session['username'])
-        db.insert_participate(cid, uid)
+        print("\n" + str(mail_list) + "\n")
+
+        friend_list = ret.get_all_friends(ret.get_uid(session['username']))
+        temp = friend_list
+        friend_list.clear()
+        for friend in temp:
+            friend_list.apend(friend[0])
+        temp.clear()
+        uid_list = []
+        uid_list.append(ret.get_uid(session['username']))
+
+        for mail_id in mail_list:
+            if mail_id == "none":
+                continue
+            
+            if check.signup(mail_id):
+                if ret.get_uid(mail_id) in friend_list:
+                    msg = Message('You have a new challenge!!', sender = 'satisfybit@gmail.com', recipients=[mail_id])
+                    uid = ret.get_uid(session['username'])
+                    uid_list.append(uid)
+                    fname = ret.get_fname(uid)
+                    lname = ret.get_lname(uid)
+                    msg.body = fname + " " + lname + " has posed you a new challenge!!"
+                    mail.send(msg)
+                #else:
+                    #not_friend = "One or more users are not your friend."
+                    #return render_template('/cchallenge.html', no_user = not_friend)
+            else:
+                user_does_not_exist = "User does not exist."
+                return render_template('/cchallenge.html', no_user = user_does_not_exist)
+
+        cid = db.insert_challenge(tot_distance, tot_time, type, sdate, edate)
+        ret.make_commit()
+        for uid in uid_list:
+            db.insert_participate(cid, uid)
         clear = True
 
     if not clear:
