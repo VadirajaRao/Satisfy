@@ -167,11 +167,11 @@ def create_challenge():
     if request.method == 'POST':
         distance_km = request.form['km']
         distance_m = request.form['m']
-        tot_distance = float(distance_km) + (float(distance_m) / 60)
+        tot_distance = float(distance_km) + (float(distance_m) / 1000)
         hours = request.form['hours']
         minutes = request.form['minutes']
         sec = request.form['sec']
-        tot_time = (float(hours * 60)) + (float(minutes)) + (float(sec) / 60)
+        tot_time = (int(hours * 60)) + (float(minutes)) + (float(sec) / 60)
         type = request.form['type']
         sdate = request.form['start_date']
         edate = request.form['end_date']
@@ -184,11 +184,11 @@ def create_challenge():
         print("\n" + str(mail_list) + "\n")
 
         friend_list = ret.get_all_friends(ret.get_uid(session['username']))
-        temp = friend_list
-        friend_list.clear()
-        for friend in temp:
-            friend_list.apend(friend[0])
-        temp.clear()
+        print("\nBefore : " + str(friend_list) + "\n")
+        temp = []
+        for friend in friend_list:
+            temp.append(friend[0])
+        print("\nAfter : " + str(temp) + "\n")
         uid_list = []
         uid_list.append(ret.get_uid(session['username']))
 
@@ -197,17 +197,18 @@ def create_challenge():
                 continue
             
             if check.signup(mail_id):
-                if ret.get_uid(mail_id) in friend_list:
+                fid = ret.get_uid(mail_id)
+                if fid in temp:
                     msg = Message('You have a new challenge!!', sender = 'satisfybit@gmail.com', recipients=[mail_id])
                     uid = ret.get_uid(session['username'])
-                    uid_list.append(uid)
+                    uid_list.append(fid)
                     fname = ret.get_fname(uid)
                     lname = ret.get_lname(uid)
                     msg.body = fname + " " + lname + " has posed you a new challenge!!"
                     mail.send(msg)
-                #else:
-                    #not_friend = "One or more users are not your friend."
-                    #return render_template('/cchallenge.html', no_user = not_friend)
+                else:
+                    not_friend = "One or more users are not your friend."
+                    return render_template('/cchallenge.html', no_user = not_friend)
             else:
                 user_does_not_exist = "User does not exist."
                 return render_template('/cchallenge.html', no_user = user_does_not_exist)
@@ -221,7 +222,7 @@ def create_challenge():
     if not clear:
         return render_template('/cchallenge.html')
     else:
-        return redirect(url_for('homepage'))
+        return redirect(url_for('challenges'))
 
 @app.route('/history')
 def history():
@@ -253,7 +254,24 @@ def history():
 def challenges():
     uid = ret.get_uid(session['username'])
     challenges = ret.get_all_challenges(uid)
-    return render_template('/challengelist.html', res = challenges)
+    temp = []
+    final = []
+    for challenge in challenges:
+        temp.clear()
+        temp.insert(0, challenge[0])
+
+        hours = int(challenge[1] / 60)
+        minutes = int(challenge[1] - (hours * 60))
+        sec = int((challenge[1] - int(challenge[1])) * 60)
+        temp.insert(1, (str(hours) + " : " + str(minutes) + " : " + str(sec)))
+
+        temp.insert(2, challenge[2])
+        temp.insert(3, challenge[3])
+        temp.insert(4, challenge[4])
+        final.append(temp)
+
+    print("\n\nChallenges : " + str(final) + "\n\n")
+    return render_template('/challengelist.html', res = final)
 
 @app.route('/friends', methods = ['POST', 'GET'])
 def friends():
@@ -290,6 +308,7 @@ def friends():
     if not clear:
         return render_template('/friends.html', names = name_list)
     else:
+        ret.make_commit()
         return redirect(url_for('homepage'))
 
 if __name__ == '__main__':
