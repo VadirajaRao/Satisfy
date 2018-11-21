@@ -5,7 +5,7 @@ import datetime
 class insert_val(object):
     """Function that inserts value into various tables."""
     def __init__(self):
-        """Function that connects to the database."""
+        """Creating connection to the database and creating a cursor."""
         self.sat = con.connect(
             host = "localhost",
             user = "vadi",
@@ -92,7 +92,6 @@ class insert_val(object):
         """Insert values into participate table."""
         sql = 'insert into participate(cid, uid) values (%s, %s)'
         val = (cid, uid)
-
         self.cur.execute(sql, val)
         self.sat.commit()
 
@@ -100,6 +99,5 @@ class insert_val(object):
         """Update the final speed of the user."""
         sql = 'update user_speed set fin_speed = %s where uid = %s'
         val = (fin_speed, uid)
-
         self.cur.execute(sql, val)
         self.sat.commit()
