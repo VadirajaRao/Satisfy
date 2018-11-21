@@ -61,3 +61,134 @@ li a:hover:not(.active)
 {
     color: red;
 }
+
+input[type=text], .type, input[type=number], input[type=date], input[type=email]
+{
+    align-self: center;
+    width: 35%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: flex;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=submit] 
+{
+    margin: 5px;
+    border: none;
+    background: #ca1212;
+    color: black;
+    font-size: 18px;
+}
+
+.button 
+{
+border-radius: 8px;
+background-color:  #ca1212;
+color:rgb(0, 0, 0);
+text-align: center;
+font-size: 18px;
+padding: 7px;
+width: 115px;
+transition: all 0.5s;
+cursor: pointer;
+margin: 5px;
+border: 2px solid #ca1212;
+}
+  
+.button span 
+{
+cursor: pointer;
+display: inline-block;
+position: relative;
+transition: 0.5s;
+}
+
+.button span:after 
+{
+content: '\00bb';
+position: absolute;
+opacity: 0;
+top: 0;
+right: -20px;
+transition: 0.5s;
+width: 30%;
+}
+
+.button:hover span 
+{
+padding-right: 25px;
+
+}
+
+.button:hover span:after 
+{
+opacity: 1;
+right: 0;
+}
+
+
+/* Opacity for regbutton */
+.registerbtn:hover 
+{
+    opacity: 1;
+}
+  
+.container 
+{
+    padding: 16px;
+    background-color: white;
+}
+
+/* hr styling */
+hr 
+{
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+.email
+{
+    color:white;
+    padding-left: 15px;
+}
+
+.table1
+{
+    padding: 4%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+table 
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th 
+{
+    border: 1px solid #ddd;
+    padding: 17px;
+}
+
+tr:nth-child(even)
+{
+    background-color: #f2f2f2;
+}
+
+tr:hover 
+{
+    background-color: #ddd;
+}
+
+th 
+{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: red;
+    color: white;
+}

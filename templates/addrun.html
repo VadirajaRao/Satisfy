@@ -33,20 +33,32 @@
 
             <!--Run details-->
             <form action="https://127.0.0.1:5000/addrun" method="POST">
-                <div class="rund">
-                    <div class="dist">
-                        Distance 
+                <div class="dist">
+                    <div class="kms">
+                        Distance(km) 
                         <input type="number" placeholder= "km" name="dist_km" value=" ">
+                    </div>
+                    <div class="mts">
+                        Distance(mts)
                         <input type="number" placeholder="m" name="dist_m" value=" ">
                     </div>
+                </div>
 
-                    <div class="duration">
-                        Duration
+                <div class="duration">
+                    <div class="hrs">
+                        Duration(hrs)
                         <input type="number" placeholder = "Hours" name="time_hours" value=" ">
+                    </div>
+                    <div class="mins">
+                        Duration(mins)
                         <input type="number" placeholder="Minutes" name="time_min" value=" ">
+                    </div>
+                    <div class="secs">
+                        Duration(secs)
                         <input type="number" placeholder="Seconds" name="time_sec" value=" ">
                     </div>
-
+                </div>
+                <div class="runtype">
                     <h4>Run Type</h4>
                     <select class="type" name="type">
                         <option value="Sprint">Sprint</option>
@@ -60,7 +72,7 @@
                         <input type="date" placeholder="Date in DD/MM/YY" name="date" value=" ">
                     </div>
                 </div>
-
+            
                 <!--Submit-->
                 <div class="subbutton">  
                     <!--<input type="submit" name="submit" value="Start satisfy">-->

@@ -66,7 +66,7 @@ li a:hover:not(.active)
 
 .table1
 {
-    padding: 3%;
+    padding: 4%;
 }
 
 #customers 
@@ -78,23 +78,18 @@ li a:hover:not(.active)
 
 #customers td, #customers th 
 {
-    border: 1px solid rgba(221, 221, 221, 0.26);
+    border: 1px solid #ddd;
     padding: 17px;
 }
 
 #customers tr:nth-child(even)
-{
-    background-color: #a014145e;
-}
-
-#customers tr:nth-child(odd)
 {
     background-color: #f2f2f2;
 }
 
 #customers tr:hover 
 {
-    background-color: rgb(31, 22, 22);
+    background-color:#ddd;
 }
 
 #customers th

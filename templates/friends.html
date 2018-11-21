@@ -31,16 +31,35 @@
                     <li style="float:right"><h3 class="contact">Contact: satisfy@gmail.com</h3></li>
                 </ul>
             </div>
+            <div class="table1">
+                    <table>
+                        <tr>
+                            <th>Friends</th>
+                        </tr>
+     
+                        {% for run in runs %}
+                        <tr>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+            </div>
 
-            <div>
+            <div class="email">
                 <form action="https://127.0.0.1:5000/friends" method='POST'>
-                    Mail : <input type="email" placeholder="mail" name="mail">
+                    Add Friend : <input type="email" placeholder="Friend's mail" name="mail">
 
                     {% if error %}
                     <p>{{ error }}</p>
                     {% endif %}
 
-                    <input type="submit">
+                    <div class="regbutton">    
+                            <button class="button">
+                                <span>
+                                    <input type="submit">
+                                </span>
+                            </button>
+                    </div> 
                 </form>
             </div>
         </div>
