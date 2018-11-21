@@ -111,4 +111,10 @@ cur.execute('create table run_speed (uid int not null, rdate date not null, run_
 
 cur.execute('create table user_speed (uid int not null primary key, fin_speed float not null, constraint uid8_fk foreign key(uid) references user(uid) on delete cascade)')
 
+""" Creating trigger."""
+
+cur.execute('delimiter //')
+cur.execute('create trigger compute_total before insert on run for each row begin update user set tot_dist = tot_dist + new.dist where user.uid = new.uid; update user set tot_time = tot_time + new.time where user.uid = new.uid; end//')
+cur.execute('delimiter ;')
+
 satisfy.commit()

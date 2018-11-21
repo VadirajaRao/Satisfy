@@ -159,7 +159,7 @@ def addrun():
         return render_template('/addrun.html')
     else:
         ret.make_commit() # To make sure the changes made by the trigger are committed.
-        return redirect(url_for('homepage'))
+        return redirect(url_for('history'))
 
 @app.route('/create_challenge', methods = ['POST', 'GET'])
 def create_challenge():
@@ -184,11 +184,9 @@ def create_challenge():
         print("\n" + str(mail_list) + "\n")
 
         friend_list = ret.get_all_friends(ret.get_uid(session['username']))
-        print("\nBefore : " + str(friend_list) + "\n")
         temp = []
         for friend in friend_list:
             temp.append(friend[0])
-        print("\nAfter : " + str(temp) + "\n")
         uid_list = []
         uid_list.append(ret.get_uid(session['username']))
 
@@ -230,23 +228,21 @@ def history():
     res = ret.get_all_runs(uid)
 
     final = []
-    temp = []
+    i = 0
     for tuple in res:
-        temp.clear()
-        temp.insert(0, tuple[0])
         hours = int(tuple[1] / 60)
         minutes = int(tuple[1] - (hours * 60))
         sec = int((tuple[1] - int(tuple[1])) * 60)
         
-        temp.insert(1 , (str(hours) + " : " + str(minutes) + " : " + str(sec)) )
-        
-        temp.insert(2, tuple[2])
+        fin_time = (str(hours) + " : " + str(minutes) + " : " + str(sec))
 
         min = int(tuple[3])
         sec = int((tuple[3] - min) * 60)
         perkm = str(min) + "' " + str(sec) + '" '
-        temp.insert(3, perkm)
-        final.append(temp)
+        
+        temp = (tuple[0], fin_time, tuple[2], perkm)
+        final.insert(i, temp)
+        i += 1
 
     return render_template('/history.html', runs = final)
 
@@ -254,23 +250,18 @@ def history():
 def challenges():
     uid = ret.get_uid(session['username'])
     challenges = ret.get_all_challenges(uid)
-    temp = []
     final = []
+    i = 0
     for challenge in challenges:
-        temp.clear()
-        temp.insert(0, challenge[0])
-
         hours = int(challenge[1] / 60)
         minutes = int(challenge[1] - (hours * 60))
         sec = int((challenge[1] - int(challenge[1])) * 60)
-        temp.insert(1, (str(hours) + " : " + str(minutes) + " : " + str(sec)))
+        fin_time = (str(hours) + " : " + str(minutes) + " : " + str(sec))
 
-        temp.insert(2, challenge[2])
-        temp.insert(3, challenge[3])
-        temp.insert(4, challenge[4])
-        final.append(temp)
+        temp = (challenge[0], fin_time, challenge[2], challenge[3], challenge[4])
+        final.insert(i, temp)
+        i += 1
 
-    print("\n\nChallenges : " + str(final) + "\n\n")
     return render_template('/challengelist.html', res = final)
 
 @app.route('/friends', methods = ['POST', 'GET'])
