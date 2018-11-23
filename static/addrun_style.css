@@ -63,21 +63,51 @@ li a:hover:not(.active)
     color: red;
 }
 
-.rund
+.dist
 {
     padding-left: 35%;
-    padding-top : 5%;
+    padding-top : 2%;
     font-size: 18px;
+    color: red;
 }
 
-.dist, .date, .type
+.date, .type
 {
     padding-bottom: 2%;
 }
 
+.kms
+{
+    width: 40%;
+    display: flex;
+    padding-bottom:0; 
+    display: inline-block;}
+
+.mts
+{
+    width: 40%;
+    display: flex;
+    padding-bottom:0; 
+    display: inline-block;
+    padding-top: 3px;
+}
+
 .duration
 {
-    padding-bottom: 0.5%;
+    padding-bottom: 0.2%;
+    padding-top: 0.5%;
+    display: flex;
+    padding-top: 1%;
+    padding-left: 25%;
+    font-size: 18px;
+    color: red;
+}
+
+.hrs , .mins , .secs
+{
+    width: 30%;
+    display: flex;
+    display: inline-block;
 }
 
 .sdate, .edate
@@ -85,7 +115,12 @@ li a:hover:not(.active)
     padding-top: 2%;
 }
 
-
+.runtype
+{
+    padding-left: 35%;
+    font-size: 18px;
+    color: red;
+}
 input[type=text], .type, input[type=number], input[type=date]
 {
     align-self: center;
@@ -95,6 +130,15 @@ input[type=text], .type, input[type=number], input[type=date]
     display: flex;
     border: none;
     background: #f1f1f1;
+}
+
+input[type=submit] 
+{
+    margin: 5px;
+    border: none;
+    background: #ca1212;
+    color: black;
+    font-size: 18px;
 }
 
 .subbutton
@@ -108,7 +152,7 @@ input[type=text], .type, input[type=number], input[type=date]
     color: #FFFFFF;
     text-align: center;
     font-size: 18px;
-    padding: 10px;
+    padding: 7px;
     width: 115px;
     transition: all 0.5s;
     cursor: pointer;

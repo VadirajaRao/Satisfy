@@ -15,10 +15,12 @@ class retrieve (object):
 
     def get_uid(self, mail):
         """Retruns uid using mail."""
+        print(mail)
         sql = 'select uid from user_mail where mail = %s'
         val = (mail, )
         self.cur.execute(sql, val)
         result = self.cur.fetchone()
+        print("result : " + str(result))
 
         return result[0]
 
@@ -75,7 +77,7 @@ class retrieve (object):
         res = self.cur.fetchall()
 
         result = []
-        sql = 'select dist, time, type, start, end from challenge where cid = %s'
+        sql = 'select dist, time, type, start, end, cid from challenge where cid = %s'
         for i in res:
             val = (i[0], )
             self.cur.execute(sql, val)
@@ -127,6 +129,19 @@ class retrieve (object):
         self.cur.execute(sql, val)
 
         return self.cur.fetchall()
+
+    def get_all_uid(self, cid):
+        """Returns all the users in a challenge."""
+        sql = 'select uid from participate where cid = %s'
+        val = (cid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchall()
+
+        result = []
+        for i in res:
+            result.append(i[0])
+
+        return result
 
     def make_commit(self):
         """Commit the changes into the database."""

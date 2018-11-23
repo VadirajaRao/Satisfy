@@ -88,6 +88,7 @@ def signup_page():
             return render_template('/signup.html', not_matching_passwd = message)
         
         clear = True
+        ret.make_commit()
 
     if not clear:
         return render_template('/signup.html')
@@ -196,18 +197,25 @@ def create_challenge():
         mail_list.insert(3, request.form['mail4'])
 
         friend_list = ret.get_all_friends(ret.get_uid(session['username']))
+        print("\nFriend_list  :  " + str(friend_list) + "\n")
         temp = []
         for friend in friend_list:
             temp.append(friend[0]) # To convert a list of tuples into simple list.
+        print("\ntemp  :  " + str(temp) + "\n")
         uid_list = []
         uid_list.append(ret.get_uid(session['username']))
+        print("\nuid_list  :  " + str(uid_list) + "\n")
 
         for mail_id in mail_list:
             if mail_id == "none":
-                continue
-            
-            if check.signup(mail_id):
-                fid = ret.get_uid(mail_id)
+                break
+
+            exists = check.signup(mail_id)
+            print("\nuser exists = " + str(exists))
+            if exists:
+                print("calling get_uid()")
+                fid = ret.get_uid(str(mail_id))
+                print("\nReceived fid : " + str(fid) + "\n")
                 if fid in temp:
                     msg = Message('You have a new challenge!!', sender = 'satisfybit@gmail.com', recipients=[mail_id])
                     uid = ret.get_uid(session['username'])
@@ -216,15 +224,17 @@ def create_challenge():
                     lname = ret.get_lname(uid)
                     msg.body = fname + " " + lname + " has posed you a new challenge!!"
                     mail.send(msg)
+                    print("message sent!!")
                 else:
                     not_friend = "One or more users are not your friend."
                     return render_template('/cchallenge.html', no_user = not_friend)
-            else:
-                user_does_not_exist = "User does not exist."
-                return render_template('/cchallenge.html', no_user = user_does_not_exist)
+            # else:
+                # user_does_not_exist = "User does not exist."
+                # return render_template('/cchallenge.html', no_user = user_does_not_exist)
 
         cid = db.insert_challenge(tot_distance, tot_time, type, sdate, edate)
         ret.make_commit()
+        print("\nFinal uid_list : " + str(uid_list) + "\n")
         for uid in uid_list:
             db.insert_participate(cid, uid)
         clear = True
@@ -273,7 +283,13 @@ def challenges():
         sec = int((challenge[1] - int(challenge[1])) * 60)
         fin_time = (str(hours) + " : " + str(minutes) + " : " + str(sec))
 
-        temp = (challenge[0], fin_time, challenge[2], challenge[3], challenge[4])
+        uid_list = ret.get_all_uid(challenge[5])
+        names = ""
+        for i in uid_list:
+            names = names + ret.get_fname(i) + " " + ret.get_lname(i) + ", "
+
+        names = names[:len(names)-2]
+        temp = (challenge[0], fin_time, challenge[2], challenge[3], challenge[4], names)
         final.insert(i, temp)
         i += 1
 

@@ -30,12 +30,16 @@ class credentials(object):
 
     def signup (self, mail):
         """Check if there is an already existing user with the mail id provided."""
-        args = [mail, 0]
+        args = [str(mail), 0]
         result = self.cur.callproc('user_exists', args) # 'user_exists' is a stored procedure.
+        print("check.signup : " + str(result) + "\n")
+        
+        # sql = 'select uid from user where exists ( select * from user_mail where user.uid = user_mail.uid and user_mail.mail = %s)'
+        # val = (mail, )
+        # self.cur.execute(sql, val)
+        # result = self.cur.fetchone()
 
-        if result == None:
-            return False
-        elif len(result) == 0:
+        if result[1] == None:
             return False
         else:
             return True

@@ -62,6 +62,16 @@ input[type=text], input[type=password], input[type=number]
     border: none;
     background: #f1f1f1;
 }
+
+.subbutton input[type=submit] 
+{
+    margin: 5px;
+    border: none;
+    background: #ca1212;
+    color: black;
+    font-size: 18px;
+}
+
 .subbutton
 {
     padding-left: 5.5%;
@@ -69,16 +79,16 @@ input[type=text], input[type=password], input[type=number]
 .button 
 {
     border-radius: 8px;
-    background-color: #e60e0e;
+    background-color: #ca1212;
     color: #FFFFFF;
     text-align: center;
     font-size: 18px;
-    padding: 10px;
+    padding: 7px;
     width: 115px;
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
-    border: 2px solid #e60e0e ;
+    border: 2px solid #ca1212 ;
 }
   
 .button span 

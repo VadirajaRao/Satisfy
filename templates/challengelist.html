@@ -5,6 +5,14 @@
             Challenge List
         </title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'challengelist_style.css') }}">
+    
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> 
+        
     </head>
 
     <body>
@@ -13,8 +21,8 @@
 
             <!-- The Heading of the home page -->
             <div class="mainhead">
-                <h1>
-                    Satisfy
+                <h1 class="display-3">
+                    <b>Satisfy</b>
                 </h1>
             </div>
 
@@ -40,6 +48,7 @@
                         <th>TYPE</th>
                         <th>START</th>
                         <th>END</th>
+                        <th>PARTICIPANTS</th>
                     </tr>
 
                     {% for result in res %}
@@ -49,6 +58,7 @@
                             <td>{{ result[2] }}</td>
                             <td>{{ result[3] }}</td>
                             <td>{{ result[4] }}</td>
+                            <td>{{ result[5] }}</td>
                         </tr>
                     {% endfor %}
                 </table>
