@@ -68,6 +68,7 @@ li a:hover:not(.active)
     padding-left: 35%;
     padding-top : 2%;
     font-size: 18px;
+    color: red;
 }
 
 .date, .type
@@ -99,6 +100,7 @@ li a:hover:not(.active)
     padding-top: 1%;
     padding-left: 25%;
     font-size: 18px;
+    color: red;
 }
 
 .hrs , .mins , .secs
@@ -117,6 +119,7 @@ li a:hover:not(.active)
 {
     padding-left: 35%;
     font-size: 18px;
+    color: red;
 }
 input[type=text], .type, input[type=number], input[type=date]
 {

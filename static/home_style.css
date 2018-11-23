@@ -61,3 +61,15 @@ li a:hover:not(.active)
 {
     color: red;
 }
+
+.dist1, .speed1, .time1
+{
+    font-size: 60px;
+    color: red;
+    text-align: center;
+}
+
+.row
+{
+    padding-top: 5%;
+}

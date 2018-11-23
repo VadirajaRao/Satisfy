@@ -1,10 +1,10 @@
-"""Program to retrieve data from the database."""
 import mysql.connector as con
 
 
 class retrieve (object):
     """Functions for various retrievals."""
     def __init__ (self):
+        """Creating ci=onnection to the databse and creating a cursor."""
         self.sat = con.connect (
             host = "localhost",
             user = "root",
@@ -15,11 +15,12 @@ class retrieve (object):
 
     def get_uid(self, mail):
         """Retruns uid using mail."""
+        print(mail)
         sql = 'select uid from user_mail where mail = %s'
         val = (mail, )
-
         self.cur.execute(sql, val)
         result = self.cur.fetchone()
+        print("result : " + str(result))
 
         return result[0]
 
@@ -27,7 +28,6 @@ class retrieve (object):
         """Returns total time logged."""
         sql = 'select tot_time from user where uid = %s'
         val = (uid, )
-
         self.cur.execute(sql, val)
         result = self.cur.fetchone()
 
@@ -37,7 +37,6 @@ class retrieve (object):
         """Returns total distance coverec."""
         sql = 'select tot_dist from user where uid = %s'
         val = (uid, )
-
         self.cur.execute(sql, val)
         result = self.cur.fetchone()
 
@@ -47,7 +46,6 @@ class retrieve (object):
         """Retruns speed based on total distance and total time."""
         sql = 'select fin_speed from user_speed where uid = %s'
         val = (uid, )
-
         self.cur.execute(sql, val)
         result = self.cur.fetchone()
 
@@ -57,7 +55,6 @@ class retrieve (object):
         """Returns the run_num from run table for that particular day."""
         sql = 'select max(run_num) from run where uid = %s and rdate = %s'
         val = (uid, rdate)
-
         self.cur.execute(sql, val)
         result = self.cur.fetchone()
 
@@ -65,7 +62,7 @@ class retrieve (object):
 
     def get_all_runs(self, uid):
         """Retruns the run details of one user."""
-        sql = 'select dist, time, rdate from run where uid = %s'
+        sql = 'select r.dist, r.time, r.rdate, s.speed from run r, run_speed s where r.uid = s.uid and r.run_num = s.run_num and r.rdate = s.rdate and r.uid = %s'
         val = (uid, )
         self.cur.execute(sql, val)
         result = self.cur.fetchall()
@@ -77,11 +74,10 @@ class retrieve (object):
         sql = 'select cid from participate where uid = %s'
         val = (uid, )
         self.cur.execute(sql, val)
-
         res = self.cur.fetchall()
 
         result = []
-        sql = 'select dist, time, type, start, end from challenge where cid = %s'
+        sql = 'select dist, time, type, start, end, cid from challenge where cid = %s'
         for i in res:
             val = (i[0], )
             self.cur.execute(sql, val)
@@ -107,6 +103,45 @@ class retrieve (object):
         res = self.cur.fetchone()
 
         return res[0]
+
+    def get_tot_speed(self, uid):
+        """Returns the average speed based on uid."""
+        sql = 'select fin_speed from user_speed where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchone()
+
+        return res[0]
+
+    def get_number_of_runs(self, uid):
+        """Returns the number of runs."""
+        sql = 'select count(*) from run where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchone()
+
+        return res[0]
+
+    def get_all_friends(self, uid):
+        """Returns all the friends based on uid."""
+        sql = 'select fid from friends_of where uid = %s'
+        val = (uid, )
+        self.cur.execute(sql, val)
+
+        return self.cur.fetchall()
+
+    def get_all_uid(self, cid):
+        """Returns all the users in a challenge."""
+        sql = 'select uid from participate where cid = %s'
+        val = (cid, )
+        self.cur.execute(sql, val)
+        res = self.cur.fetchall()
+
+        result = []
+        for i in res:
+            result.append(i[0])
+
+        return result
 
     def make_commit(self):
         """Commit the changes into the database."""

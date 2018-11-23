@@ -5,7 +5,7 @@ import datetime
 class insert_val(object):
     """Function that inserts value into various tables."""
     def __init__(self):
-        """Function that connects to the database."""
+        """Creating connection to the database and creating a cursor."""
         self.sat = con.connect(
             host = "localhost",
             user = "root",
@@ -59,7 +59,10 @@ class insert_val(object):
 
     def insert_friend(self, *args):
         """Insert values into friend table."""
-        pass
+        sql = 'insert into friends_of (uid, fid) values (%s, %s)'
+        val = (args[0], args[1])
+        self.cur.execute(sql, val)
+        self.sat.commit()
 
     def insert_run(self, *args):
         """Insert values into run table."""
@@ -80,12 +83,21 @@ class insert_val(object):
 
     def insert_run_speed(self, *args):
         """Insert values into run_speed table."""
-        pass
+        sql = 'insert into run_speed(uid, rdate, run_num, speed) values (%s, %s, %s, %s)'
+        val = (args[0], args[1], args[2], args[3])
+        self.cur.execute(sql, val)
+        self.sat.commit()
 
     def insert_participate(self, cid, uid):
         """Insert values into participate table."""
         sql = 'insert into participate(cid, uid) values (%s, %s)'
         val = (cid, uid)
+        self.cur.execute(sql, val)
+        self.sat.commit()
 
+    def update_user_speed(self, uid, fin_speed):
+        """Update the final speed of the user."""
+        sql = 'update user_speed set fin_speed = %s where uid = %s'
+        val = (fin_speed, uid)
         self.cur.execute(sql, val)
         self.sat.commit()

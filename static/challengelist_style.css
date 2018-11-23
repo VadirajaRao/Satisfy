@@ -87,6 +87,11 @@ li a:hover:not(.active)
     background-color: #f2f2f2;
 }
 
+tr:nth-child(odd)
+{
+    background-color: #f2f2f2;
+}
+
 #customers tr:hover 
 {
     background-color:#ddd;
